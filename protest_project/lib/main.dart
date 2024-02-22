@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:protest_project/pages/login.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +18,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -34,24 +36,33 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: AppBar(title: Text('Your App Title')),
       body: Column(
         children: [
-          ProtestText(),
-
-          Expanded(
+          const ProtestText(),
+          const Expanded(
             child: SearchBarApp(),
           ),
-          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              // Navigate to LoginPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            child: const Text('Go to Login'),
+          ),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               updateEventData('New Event Created!');
             },
-            child: Text('Create Event'),
+            child: const Text('Create Event'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text('Event Data: $eventData'),
-          YourCustomContainer(),
+          const YourCustomContainer(),
+          const SizedBox(height: 16), // Add some space
         ],
       ),
     );
@@ -59,12 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class ProtestText extends StatelessWidget {
+  const ProtestText({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.fromLTRB(16, 16, 0, 0),
-      child: Text(
+      margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+      child: const Text(
         'Protest',
         style: TextStyle(
           fontFamily: 'Lilita One',
@@ -78,25 +91,15 @@ class ProtestText extends StatelessWidget {
   }
 }
 
-class LineContainer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16),
-      width: double.infinity,
-      height: 3,
-      color: Colors.black,
-    );
-  }
-}
-
 class YourCustomContainer extends StatelessWidget {
+  const YourCustomContainer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xffffe3cf),
         boxShadow: [
           BoxShadow(
@@ -106,7 +109,7 @@ class YourCustomContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text('Your Custom Content'),
@@ -117,10 +120,12 @@ class YourCustomContainer extends StatelessWidget {
 }
 
 class SearchBarApp extends StatelessWidget {
+  const SearchBarApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Search...',
