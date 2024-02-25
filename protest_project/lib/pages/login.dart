@@ -3,18 +3,51 @@ import 'package:flutter/material.dart';
 import 'package:protest_project/components/my_button.dart';
 import 'package:protest_project/components/user_textfield.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // Text Editing Controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Sign User In
   void signUserIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code == 'invalid-credential') {
+        // * Email Enumeration Protection Enabled *
+        invalidCredentialMessage();
+      }
+    }
+  }
+
+  void invalidCredentialMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text("Invalid Email or Password"),
+        );
+      },
     );
   }
 
